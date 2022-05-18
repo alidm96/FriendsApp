@@ -10,6 +10,6 @@ namespace FriendsApp.Data.Context
 
         }
 
-        DbSet<Friend> Friends { get; set; }
+        public DbSet<Friend> Friends { get; set; }
     }
 }
