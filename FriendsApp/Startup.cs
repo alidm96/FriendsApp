@@ -1,3 +1,4 @@
+using FriendsApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +29,8 @@ namespace FriendsApp
                 .AddDbContext<Data.Context.FriendsDbContext>(config => {
                     config.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
                 });
+
+            services.AddScoped(typeof(IFriendsRepository),typeof(FriendsRepository));
 
             services.AddControllersWithViews();
         }
