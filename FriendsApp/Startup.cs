@@ -26,6 +26,8 @@ namespace FriendsApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSwaggerGen();
+
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<Data.Context.FriendsDbContext>(config => {
                     config.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
@@ -41,6 +43,12 @@ namespace FriendsApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/Swagger/v1/Swagger.json", "Friends api");
+            });
+
             app.Map("/total-friends", (context) =>
             {
                 context.Run(async (httpcontext) => { await httpcontext.Response.WriteAsync("<h1> Total Friends: " + FriendsApp.Controllers.FriendsController.FriendsCount + "</h1>"); });
