@@ -1,0 +1,13 @@
+﻿@using FriendsApp.Data
+
+@model Friend
+
+<div class="d-flex justify-content-center">
+    <div class="card" style="width: 50vw;">
+        <img style="height:50vw; object-fit:cover;" src="@Model.Image" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <p class="card-text">Friend Number @Model.FriendId</p>
+        </div>
+    </div>
+</div>

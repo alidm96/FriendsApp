@@ -1,0 +1,22 @@
+﻿@using FriendsApp.Data
+
+@model Friend
+
+<div class="Container">
+    <h3>Add New Friend</h3>
+    <form method="post" asp-controller="Friends" asp-action="List">
+      <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" type="text" class="form-control" id="Name" placeholder="Enter Name">
+      </div>
+      <div class="form-group">
+        <label asp-for="FriendId"></label>
+        <input asp-for="FriendId" type="number" class="form-control" id="FriendId" placeholder="Enter Id">
+      </div>
+      <div class="form-group">
+        <label asp-for="Image"></label>
+        <input asp-for="Image" type="url" class="form-control" id="Image" placeholder="Enter Image Url">
+      </div>
+      <button type="submit" class="btn btn-primary">Add Friend</button>
+    </form>
+</div>

@@ -1,0 +1,23 @@
+﻿@using FriendsApp.Data
+
+@model List<Friend>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Profile</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var friend in Model)
+        {
+            <tr>
+                <th scope="row">@friend.FriendId</th>
+                <td><a asp-controller="Friends" asp-action="detail" asp-route-id="@friend.FriendId">@friend.Name</a></td>
+                <td><img class="img-thumbnail" style="width:10rem;height:10rem;object-fit:cover;" src="@friend.Image"/></td>
+            </tr>
+        }
+    </tbody>
+</table>

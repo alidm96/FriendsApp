@@ -30,7 +30,9 @@ namespace FriendsApp
                     config.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
                 });
 
-            services.AddScoped(typeof(IFriendsRepository),typeof(FriendsRepository));
+            services.AddScoped(typeof(IFriendsRepository), typeof(FriendsRepository));
+
+            services.AddScoped(typeof(IFriendsService), typeof(FriendsService));
 
             services.AddControllersWithViews();
         }
