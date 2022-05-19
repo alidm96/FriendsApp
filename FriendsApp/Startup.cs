@@ -1,6 +1,7 @@
 using FriendsApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -40,6 +41,18 @@ namespace FriendsApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.Map("/total-friends", (context) =>
+            {
+                context.Run(async (httpcontext) => { await httpcontext.Response.WriteAsync("<h1> Total Friends: " + FriendsApp.Controllers.FriendsController.FriendsCount + "</h1>"); });
+            });
+
+            app.Map("/friends-json", (context) =>
+            {
+                context.Run(async (httpcontext) => {
+                    await httpcontext.Response.WriteAsync(FriendsApp.Controllers.FriendsController.FriendsJSON);
+                });
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -2,12 +2,16 @@
 using FriendsApp.Data.Context;
 using FriendsApp.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Linq;
 
 namespace FriendsApp.Controllers
 {
     public class FriendsController : Controller
     {
+        public static int FriendsCount;
+        public static string FriendsJSON;
+
         IFriendsService fs;
         public FriendsController(IFriendsService service)
         {
@@ -16,9 +20,10 @@ namespace FriendsApp.Controllers
 
         public IActionResult Index()
         {
-            var friends = fs.GetFriendsList();
+            FriendsCount = fs.GetFriendsList().Count();
+            FriendsJSON = JsonConvert.SerializeObject(fs.GetFriendsList(), Formatting.Indented);
 
-            return View(friends);
+            return View();
         }
 
         public IActionResult List(Friend friend)
@@ -32,6 +37,8 @@ namespace FriendsApp.Controllers
                 fs.FirstAdd();
             }
             var friends = fs.GetFriendsList();
+            FriendsCount = fs.GetFriendsList().Count();
+            FriendsJSON = JsonConvert.SerializeObject(fs.GetFriendsList(), Formatting.Indented);
 
             return View(friends);
         }
@@ -39,12 +46,17 @@ namespace FriendsApp.Controllers
         {
             var friends = fs.GetFriendsList();
             var friend = friends.Where(x => x.FriendId == Id).FirstOrDefault();
+            FriendsCount = fs.GetFriendsList().Count();
+            FriendsJSON = JsonConvert.SerializeObject(fs.GetFriendsList(), Formatting.Indented);
 
             return View(friend);
         }
 
         public IActionResult AddFriend()
         {
+            FriendsCount = fs.GetFriendsList().Count();
+            FriendsJSON = JsonConvert.SerializeObject(fs.GetFriendsList(), Formatting.Indented);
+
             return View();
         }
     }
