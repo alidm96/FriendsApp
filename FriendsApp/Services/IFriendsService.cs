@@ -9,5 +9,7 @@ namespace FriendsApp.Services
         void AddFriend(Friend friend);
         Task<List<Friend>> GetFriendsList();
         void FirstAdd();
+
+        void UpperName();
     }
 }

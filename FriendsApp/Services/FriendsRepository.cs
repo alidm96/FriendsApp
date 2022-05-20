@@ -42,5 +42,18 @@ namespace FriendsApp.Services
         {
             await this.dbContext.SaveChangesAsync();
         }
+
+        public void UpperName()
+        {
+            var friends = this.dbContext.Friends.ToList();
+
+            foreach (var friend in friends)
+            {
+                var newFriend = friend;
+                newFriend.Name = friend.Name.ToUpper();
+            }
+
+            this.dbContext.SaveChanges();
+        }
     }
 }

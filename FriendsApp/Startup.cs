@@ -1,4 +1,6 @@
 using FriendsApp.Services;
+using Hangfire;
+using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -26,6 +28,16 @@ namespace FriendsApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add Hangfire services.
+            services.AddHangfire(configuration => configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseStorage(new MemoryStorage()));
+
+            // Add the processing server as IHostedService
+            services.AddHangfireServer();
+
             services.AddSwaggerGen();
 
             services.AddEntityFrameworkSqlServer()
@@ -43,6 +55,8 @@ namespace FriendsApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseHangfireDashboard();
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

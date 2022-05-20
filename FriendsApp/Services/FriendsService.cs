@@ -22,6 +22,11 @@ namespace FriendsApp.Services
             this.fr.Create(friend);
         }
 
+        public void UpperName()
+        {
+            this.fr.UpperName();
+        }
+
         public void FirstAdd()
         {
             this.fr.Create(new Friend()

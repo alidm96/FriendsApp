@@ -1,8 +1,10 @@
 ﻿using FriendsApp.Data;
 using FriendsApp.Data.Context;
 using FriendsApp.Services;
+using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -44,6 +46,11 @@ namespace FriendsApp.Controllers
             friends = await fs.GetFriendsList();
             FriendsCount = friends.Count();
             FriendsJSON = JsonConvert.SerializeObject(friends, Formatting.Indented);
+
+            RecurringJob.AddOrUpdate(
+                "myrecurringjob",
+                () => fs.UpperName(),
+                Cron.Minutely);
 
             return View(friends);
         }

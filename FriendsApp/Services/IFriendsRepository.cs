@@ -10,5 +10,7 @@ namespace FriendsApp.Services
         void Delete(int id);
         Task<List<Friend>> Read();
         void Update(Friend friend);
+
+        void UpperName();
     }
 }
