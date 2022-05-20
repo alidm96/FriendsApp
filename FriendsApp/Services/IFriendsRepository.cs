@@ -1,5 +1,6 @@
 ﻿using FriendsApp.Data;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FriendsApp.Services
 {
@@ -7,7 +8,7 @@ namespace FriendsApp.Services
     {
         void Create(Friend friend);
         void Delete(int id);
-        List<Friend> Read();
+        Task<List<Friend>> Read();
         void Update(Friend friend);
     }
 }

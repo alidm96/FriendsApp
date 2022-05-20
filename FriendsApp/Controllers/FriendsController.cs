@@ -4,6 +4,7 @@ using FriendsApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FriendsApp.Controllers
 {
@@ -18,44 +19,49 @@ namespace FriendsApp.Controllers
             fs = service;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            FriendsCount = fs.GetFriendsList().Count();
-            FriendsJSON = JsonConvert.SerializeObject(fs.GetFriendsList(), Formatting.Indented);
+            var friends = await fs.GetFriendsList();
+            FriendsCount = friends.Count;
+            FriendsJSON = JsonConvert.SerializeObject(friends, Formatting.Indented);
 
             return View();
         }
 
-        public IActionResult List(Friend friend)
+        public async Task<IActionResult> List(Friend friend)
         {
+            var friends = await fs.GetFriendsList();
+            FriendsCount = friends.Count();
+
             if (this.ModelState.IsValid && friend.Name != null)
             {
                 fs.AddFriend(friend);
             }
-            if (fs.GetFriendsList().Count == 0)
+            if (FriendsCount == 0)
             {
                 fs.FirstAdd();
             }
-            var friends = fs.GetFriendsList();
-            FriendsCount = fs.GetFriendsList().Count();
-            FriendsJSON = JsonConvert.SerializeObject(fs.GetFriendsList(), Formatting.Indented);
+            friends = await fs.GetFriendsList();
+            FriendsCount = friends.Count();
+            FriendsJSON = JsonConvert.SerializeObject(friends, Formatting.Indented);
 
             return View(friends);
         }
-        public IActionResult detail(int Id)
+        public async Task<IActionResult> detail(int Id)
         {
-            var friends = fs.GetFriendsList();
+            var friends = await fs.GetFriendsList();
             var friend = friends.Where(x => x.FriendId == Id).FirstOrDefault();
-            FriendsCount = fs.GetFriendsList().Count();
-            FriendsJSON = JsonConvert.SerializeObject(fs.GetFriendsList(), Formatting.Indented);
+            FriendsCount = friends.Count();
+            FriendsJSON = JsonConvert.SerializeObject(friends, Formatting.Indented);
 
             return View(friend);
         }
 
-        public IActionResult AddFriend()
+        public async Task<IActionResult> AddFriend()
         {
-            FriendsCount = fs.GetFriendsList().Count();
-            FriendsJSON = JsonConvert.SerializeObject(fs.GetFriendsList(), Formatting.Indented);
+            var friends = await fs.GetFriendsList();
+            FriendsCount = friends.Count();
+            FriendsJSON = JsonConvert.SerializeObject(friends, Formatting.Indented);
 
             return View();
         }

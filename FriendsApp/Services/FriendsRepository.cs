@@ -1,7 +1,9 @@
 ﻿using FriendsApp.Data;
 using FriendsApp.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FriendsApp.Services
 {
@@ -13,13 +15,13 @@ namespace FriendsApp.Services
             this.dbContext = dbContext;
         }
 
-        public List<Friend> Read()
+        public async Task<List<Friend>> Read()
         {
-            return this.dbContext.Friends.ToList();
+            return await this.dbContext.Friends.ToListAsync();
         }
-        public void Create(Friend friend)
+        public async void Create(Friend friend)
         {
-            this.dbContext.Friends.Add(friend);
+            await this.dbContext.Friends.AddAsync(friend);
 
             Save();
         }
@@ -36,9 +38,9 @@ namespace FriendsApp.Services
 
             Save();
         }
-        private void Save()
+        private async void Save()
         {
-            this.dbContext.SaveChanges();
+            await this.dbContext.SaveChangesAsync();
         }
     }
 }

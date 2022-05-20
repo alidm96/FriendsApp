@@ -21,18 +21,20 @@ namespace FriendsApp.Controllers
             fs = service;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            FriendsApp.Controllers.FriendsController.FriendsCount = fs.GetFriendsList().Count;
-            FriendsApp.Controllers.FriendsController.FriendsJSON = JsonConvert.SerializeObject(fs.GetFriendsList(), Formatting.Indented);
+            var friends = await fs.GetFriendsList();
+            FriendsApp.Controllers.FriendsController.FriendsCount = friends.Count;
+            FriendsApp.Controllers.FriendsController.FriendsJSON = JsonConvert.SerializeObject(friends, Formatting.Indented);
 
             return View();
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Privacy()
         {
-            FriendsApp.Controllers.FriendsController.FriendsCount = fs.GetFriendsList().Count;
-            FriendsApp.Controllers.FriendsController.FriendsJSON = JsonConvert.SerializeObject(fs.GetFriendsList(), Formatting.Indented);
+            var friends = await fs.GetFriendsList();
+            FriendsApp.Controllers.FriendsController.FriendsCount = friends.Count;
+            FriendsApp.Controllers.FriendsController.FriendsJSON = JsonConvert.SerializeObject(friends, Formatting.Indented);
 
             return View();
         }

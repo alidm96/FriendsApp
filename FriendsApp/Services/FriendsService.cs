@@ -1,5 +1,6 @@
 ﻿using FriendsApp.Data;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FriendsApp.Services
 {
@@ -11,9 +12,9 @@ namespace FriendsApp.Services
             this.fr = fr;
         }
 
-        public List<Friend> GetFriendsList()
+        public async Task<List<Friend>> GetFriendsList()
         {
-            return this.fr.Read();
+            return await this.fr.Read();
         }
 
         public void AddFriend(Friend friend)
